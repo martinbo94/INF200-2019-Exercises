@@ -1,6 +1,9 @@
-Exersice 1
+Exercise A
 ----------
+SUITS = ('C', 'S', 'H', 'D')
+VALUES = range(1, 14)
 
+<<<<<<< Updated upstream
 
 -  For details, see `task description in the exersices
    repo <https://github.com/yngvem/INF200-2019-Exersices/blob/master/exersices/ex01.rst>`__
@@ -141,3 +144,94 @@ variable and function names, and maybe also reorganise code.
            print('You won {} points.'.format(i))
        else:
            print('You lost. Correct answer: {}.'.format(j))
+=======
+def deck_loop():
+    deck = []
+    for suit in SUITS:
+        for val in VALUES:
+            deck.append((suit, val))
+    return deck
+
+
+def deck_comp():
+    deck = [(suit + val) for suit in suits for val in values]
+    return deck
+
+if __name__ == '__main__':
+    if deck_loop() != deck_comp():
+        print('ERROR!')
+
+
+Exercise 2
+----------
+def squares_by_comp(n):
+    return [k**2 for k in range(n) if k % 3 == 1]
+
+
+def squares_by_loop(n):
+    liste = []
+    for k in range(n):
+        if k % 3 == 1:
+            liste.append(k**2)
+    return liste
+
+
+if __name__ == '__main__':
+    if squares_by_comp(10) != squares_by_loop(10):
+        print('Error!')
+
+Exercise 3
+----------
+def letter_freq(txt):
+    liste = []
+    teller = 0
+    lower_case = txt.lower()
+    while teller < len(lower_case):
+        liste.append(lower_case[teller])
+        teller += 1
+
+if __name__ == '__main__':
+    text = input('Please enter text to analyse: ')
+
+    frequencies = letter_freq(text)
+    for letter, count in frequencies.items():
+        print('{:3}{:10}'.format(letter, count))
+
+Exercise 4
+----------
+from random import randint
+
+__author__ = 'Martin Boe'
+__email__ = 'martinb@nmbu.no'
+
+
+def b():
+    c = 0
+    while c < 1:
+        c = int(input('Your guess: '))
+    return c
+
+def sum_two_dice():
+    return randint(1, 6) + randint(1, 6)
+
+def is_equal(number1, number2):
+    return number1 == number2
+
+if __name__ == '__main__':
+
+    h = False
+    i = 3
+    j = sum_two_dice()
+    while h and i < 0:
+        k = b()
+        h = e(j, k)
+        if not h:
+            print('Wrong, try again!')
+            i -= 1
+
+    if i > 0:
+        print('You won {} points.'.format(i))
+    else:
+        print('You lost. Correct answer: {}.'.format(j))
+Deadline:
+>>>>>>> Stashed changes
