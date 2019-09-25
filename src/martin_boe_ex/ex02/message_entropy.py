@@ -1,5 +1,6 @@
 from math import log2
 
+
 def letter_freq(txt):
     txt = txt.lower()
     empty_dict = {}

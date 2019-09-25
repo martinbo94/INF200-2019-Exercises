@@ -1,13 +1,14 @@
 
 def char_counts(textfilename):
-    """This function imports a file using UTF--8 and reads the unique number of characters
-    into a string. It then counts how often each character code occurs in the string and
-    returns the result as a list of occupancies for the character code"""
+    """This function imports a file using UTF--8 and reads the unique number
+     of characters into a string. It then counts how often each character code
+      occurs in the string and returns the result as a list of occupancies
+      for the character code"""
 
     list_with_characters = [0]*256
     with open(textfilename, "r", encoding="UTF--8") as f:
-        for character in f.read():
-            list_with_characters[ord(character)] += 1
+        for char in f.read():
+            list_with_characters[ord(char)] += 1
     return list_with_characters
 
 
