@@ -3,8 +3,6 @@
 __author__ = 'Martin Bø'
 __email__ = 'martinb@nmbu.no'
 
-#  from hypothesis import given,strategies
-
 
 def bubble_sort(data1):
     sorted_list = list(data1)
@@ -33,16 +31,15 @@ def sorted_is_not_original():
     data = [3, 2, 1]
     sorted_data = bubble_sort(data)
 
-    assert sorted_data != data
+    assert sorted_data is not data
 
 
 def test_original_unchanged():
     """Test that sorting leaves the original data unchanged."""
     data = [3, 2, 1]
-    sorted_data = bubble_sort(data)
+    bubble_sort(data)
 
     assert data == [3, 2, 1]
-    return sorted_data  # Returns just to avoid pep8 violation
 
 
 def test_sort_sorted():
@@ -74,7 +71,19 @@ def test_sort_all_equal():
 
 def test_sorting():
     """Test sorting for various cases"""
-    various_lists = []
+    string = ["A", "B", "C"]
+    sorted_string = bubble_sort(string)
+    for small, large in zip(sorted_string[:-1], sorted_string[1:]):
+        assert small <= large
 
-    for small, large in zip(various_lists[:-1], various_lists[1:]):
+    negative_numbers = [-3,  -5, -1, -99, -34, -33]
+    sorted_negative_numbers = bubble_sort(negative_numbers)
+    for small, large in zip(sorted_negative_numbers[:-1],
+                            sorted_negative_numbers[1:]):
+        assert small <= large
+
+    odd_length_list = [3,  5, 1, 99, 34, 33, -2]
+    odd_length_list_sorted = bubble_sort(odd_length_list)
+    for small, large in zip(odd_length_list_sorted[:-1],
+                            odd_length_list_sorted[1:]):
         assert small <= large
