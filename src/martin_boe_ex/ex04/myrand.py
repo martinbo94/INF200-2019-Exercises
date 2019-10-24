@@ -11,6 +11,7 @@ class LCGrand:
         self.m = (2**31)-1
 
     def rand(self):
+        pass
 
 
 class ListRand:
