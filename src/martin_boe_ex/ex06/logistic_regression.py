@@ -12,20 +12,7 @@ from sklearn.utils import check_random_state, check_X_y
 
 
 def sigmoid(z):
-    r"""Perform a logistic transform on the input.
-    This function applies the sigmoidal function element-wise to all
-    elements of `z`. The sigmoidal function is on the following form:
-    .. math::
-        \frac{1}{1 + exp(-\mathbf{z})}.
-    Parameters
-    ----------
-    z : np.ndarray
-        Logit to transform.
-    Returns
-    -------
-    sigmoidal_transformed_z : np.ndarray
-        Transformed input.
-    """
+    """asd"""
     return 1/(1 + np.exp(-z))
 
 
@@ -50,8 +37,8 @@ def predict_proba(coef, X):
     p : np.ndarray(shape(n,))
         The predicted class probabilities.
     """
-    # Your code here
-    pass
+    probability = sigmoid(X*coef)
+    return probability
 
 
 def logistic_gradient(coef, X, y):
@@ -134,8 +121,10 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         random_state : np.random.random_state or int or None (default=None)
             A numpy random state object or a seed for a numpy random state object.
         """
-        # Your code here
-        pass
+        self.max_iter = max_iter
+        self.tol = tol
+        self.learning_rate = learning_rate
+        self.random_state = random_state
 
     def _has_converged(self, coef, X, y):
         r"""Whether the gradient descent algorithm has converged.
@@ -209,11 +198,6 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
 
         if any((y < 0) | (y > 1)):
             raise ValueError("Only y-values between 0 and 1 are accepted.")
-
-        # A random state is a random number generator, akin to those
-        # you made in earlier coursework. It has all functions of
-        # np.ranom, but its sequence of random numbers is not affected
-        # by calls to np.random.
         random_state = check_random_state(self.random_state)
         coef = random_state.standard_normal(X.shape[1])
 
@@ -270,16 +254,13 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
 
 
 if __name__ == "__main__":
-    # Simulate a random dataset
     X = np.random.standard_normal((100, 5))
     coef = np.random.standard_normal(5)
     y = predict_proba(coef, X) > 0.5
 
-    # Fit a logistic regression model to the X and y vector
-    # Fill in your code here.
-    # Create a logistic regression object and fit it to the dataset
+    lr_model = LogisticRegression()
+    lr_model.fit(X, y)
 
-    # Print performance information
     print(f"Accuracy: {lr_model.score(X, y)}")
     print(f"True coefficients: {coef}")
     print(f"Learned coefficients: {lr_model.coef_}")
