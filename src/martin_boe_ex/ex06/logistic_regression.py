@@ -13,7 +13,18 @@ from numpy import linalg as la
 
 
 def sigmoid(z):
-    """asd"""
+    r"""Perform a logistic transform on the input.
+
+    This function applies the sigmoidal function element-wise to all
+
+    elements of `z`. The sigmoidal function is on the following form:
+
+    Returns
+    -------
+    sigmoidal_transformed_z : np.ndarray
+
+        Transformed input.
+    """
     sigmoid_transform = 1/(1 + np.exp(-z))
     return sigmoid_transform
 
@@ -273,7 +284,7 @@ if __name__ == "__main__":
     coef = np.random.standard_normal(5)
     y = predict_proba(coef, X) > 0.5
 
-    lr_model = LogisticRegression(max_iter=50)
+    lr_model = LogisticRegression()
     lr_model.fit(X, y)
 
     print(f"Accuracy: {lr_model.score(X, y)}")
