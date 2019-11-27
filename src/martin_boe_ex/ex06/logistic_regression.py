@@ -39,7 +39,8 @@ def predict_proba(coef, X):
     p : np.ndarray(shape(n,))
         The predicted class probabilities.
     """
-    probability = sigmoid(np.dot(X, coef))
+    dot_product = np.dot(X, coef)
+    probability = sigmoid(dot_product)
     return probability
 
 
