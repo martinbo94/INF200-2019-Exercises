@@ -70,7 +70,11 @@ def logistic_gradient(coef, X, y):
         The gradient of the cross entropy loss related to the linear
         logistic regression model.
     """
-    return X.T@(X -)
+    y_hatt = predict_proba(coef, X)
+    new_y = (y - y_hatt)
+    log_gradient = np.sum(np.matmul(new_y, X))
+    return log_gradient
+
 
 
 
