@@ -9,11 +9,12 @@ import numpy as np
 from sklearn.base import BaseEstimator, ClassifierMixin
 from sklearn.exceptions import NotFittedError
 from sklearn.utils import check_random_state, check_X_y
-
+from numpy import linalg as la
 
 def sigmoid(z):
     """asd"""
-    return 1/(1 + np.exp(-z))
+    sigmoid_transform = 1/(1 + np.exp(-z))
+    return sigmoid_transform
 
 
 def predict_proba(coef, X):
@@ -37,7 +38,7 @@ def predict_proba(coef, X):
     p : np.ndarray(shape(n,))
         The predicted class probabilities.
     """
-    probability = sigmoid(X*coef)
+    probability = sigmoid(X.dot(coef))
     return probability
 
 
@@ -45,11 +46,13 @@ def logistic_gradient(coef, X, y):
     r"""Returns the gradient of a logistic regression model.
     The gradient is given by
     .. math::
-        \nabla_w L(\mathbf{w}; X, \mathbf{y}) = \sum_i \mathbf{x}_i (y_i - \hat{y}_i),
-    or, elementwise,
+        \nabla_w L(\mathbf{w}; X, \mathbf{y}) =
+         \sum_i \mathbf{x}_i (y_i - \hat{y}_i), or, elementwise,
     .. math::
-        \left[\nabla_w L(\mathbf{w}; X, \mathbf{y})\right]_j = \frac{\partial L}{\partial w_j}
-                                                             = \sum_i X_{ij} (y_i - \hat{y}_i),
+        \left[\nabla_w L(\mathbf{w}; X, \mathbf{y})\right]_j =
+         \frac{\partial L}{\partial w_j}
+                                                             =
+        \sum_i X_{ij} (y_i - \hat{y}_i),
     where :math:`\hat{y}_i` is the predicted value for data point
     :math:`i` and is given by :math:`\sigma(x_i^Tw)`, where
     :math:`\sigma(z)` is the sigmoidal function.
@@ -67,8 +70,9 @@ def logistic_gradient(coef, X, y):
         The gradient of the cross entropy loss related to the linear
         logistic regression model.
     """
-    # Your code here
-    pass
+    return X.T@(X -)
+
+
 
 
 class LogisticRegression(BaseEstimator, ClassifierMixin):
@@ -181,7 +185,7 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
             The logistic regression weights
         """
         # Your code here
-        pass
+
 
     def fit(self, X, y):
         """Fit a logistic regression model to the data.
