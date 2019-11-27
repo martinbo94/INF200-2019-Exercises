@@ -38,7 +38,7 @@ def predict_proba(coef, X):
     p : np.ndarray(shape(n,))
         The predicted class probabilities.
     """
-    probability = sigmoid(X.dot(coef))
+    probability = sigmoid(np.dot(X, coef))
     return probability
 
 
@@ -127,7 +127,8 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         learning_rate : float (default=0.01)
             The step-size for the gradient descent updates.
         random_state : np.random.random_state or int or None (default=None)
-            A numpy random state object or a seed for a numpy random state object.
+            A numpy random state object or a seed for a numpy random state
+             object.
         """
         self.max_iter = max_iter
         self.tol = tol
@@ -157,15 +158,18 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         has_converged : bool
             True if the convergence criteria above is met, False otherwise.
         """
-        # Your code here
-        pass
+        norm = la.norm(logistic_gradient(coef, X, y))
+        tol = self.tol
+        return norm < tol
+
 
     def _fit_gradient_descent(self, coef, X, y):
         r"""Fit the logisitc regression model to the data given initial weights
         Gradient descent works by iteratively applying the following update
         rule
         .. math::
-            \mathbf{w}^{(k)} \gets \mathbf{w}^{(k-1)} - \eta \nabla L(\mathbf{w}^{(k-1)}; X, \mathbf{y}),
+            \mathbf{w}^{(k)} \gets \mathbf{w}^{(k-1)} -
+            \eta \nabla L(\mathbf{w}^{(k-1)}; X, \mathbf{y}),
         where :math:`\mathbf{w}^{(k)}` is the coefficient vector at iteration
         ``k``, :math:`\mathbf{w}^{(k-1)}` is the coefficient vector at
         iteration k-1, :math:`\eta` is the learning rate and
@@ -188,8 +192,13 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         coef : np.ndarray(shape=(n,))
             The logistic regression weights
         """
-        # Your code here
+        iterator = 0
+        converged = False
 
+        while iterator < self.max_iter and not converged:
+            coef = coef - self.learning_rate * logistic_gradient(coef, X, y)
+            iterator += 1
+            converged = self._has_converged(coef, X, y)
 
     def fit(self, X, y):
         """Fit a logistic regression model to the data.
@@ -266,7 +275,7 @@ if __name__ == "__main__":
     coef = np.random.standard_normal(5)
     y = predict_proba(coef, X) > 0.5
 
-    lr_model = LogisticRegression()
+    lr_model = LogisticRegression(max_iter=50)
     lr_model.fit(X, y)
 
     print(f"Accuracy: {lr_model.score(X, y)}")
