@@ -11,6 +11,7 @@ from sklearn.exceptions import NotFittedError
 from sklearn.utils import check_random_state, check_X_y
 from numpy import linalg as la
 
+
 def sigmoid(z):
     """asd"""
     sigmoid_transform = 1/(1 + np.exp(-z))
@@ -74,9 +75,6 @@ def logistic_gradient(coef, X, y):
     new_y = (y - y_hatt)
     log_gradient = np.sum(np.matmul(new_y, X))
     return log_gradient
-
-
-
 
 
 class LogisticRegression(BaseEstimator, ClassifierMixin):
@@ -161,7 +159,6 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         norm = la.norm(logistic_gradient(coef, X, y))
         tol = self.tol
         return norm < tol
-
 
     def _fit_gradient_descent(self, coef, X, y):
         r"""Fit the logisitc regression model to the data given initial weights
