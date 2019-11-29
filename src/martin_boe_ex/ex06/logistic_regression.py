@@ -84,8 +84,8 @@ def logistic_gradient(coef, X, y):
         logistic regression model.
     """
     y_hatt = predict_proba(coef, X)
-    new_y = (y - y_hatt)
-    log_gradient = np.sum(np.matmul(new_y, X))
+    new_y = (y_hatt - y)
+    log_gradient = np.matmul(new_y, X)
     return log_gradient
 
 
@@ -144,6 +144,7 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         self.tol = tol
         self.learning_rate = learning_rate
         self.random_state = random_state
+
 
     def _has_converged(self, coef, X, y):
         r"""Whether the gradient descent algorithm has converged.
@@ -208,6 +209,8 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
             coef = coef - self.learning_rate * logistic_gradient(coef, X, y)
             iterator += 1
             converged = self._has_converged(coef, X, y)
+
+        return coef
 
     def fit(self, X, y):
         """Fit a logistic regression model to the data.
@@ -284,7 +287,7 @@ if __name__ == "__main__":
     coef = np.random.standard_normal(5)
     y = predict_proba(coef, X) > 0.5
 
-    lr_model = LogisticRegression()
+    lr_model = LogisticRegression(max_iter=500)
     lr_model.fit(X, y)
 
     print(f"Accuracy: {lr_model.score(X, y)}")
